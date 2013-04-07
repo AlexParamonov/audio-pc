@@ -32,7 +32,9 @@ or send me a pull request!*
 Installation
 ------------
 
-1. Unzip or clone this program into C:\audio-pc.
+1. [Download code](https://github.com/AlexParamonov/audio-pc/archive/master.zip)
+1. Unzip it into C:\audio-pc.
+1. Open optimize.bat with notepad and edit it.
 1. Put a link to startup_user.bat into current user autoload directory
   for Windows 8 it will be here: C:\Users\YouUserName\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup.
 1. Schedule startup.bat to be loaded on user login (it should be run with admin rights):
@@ -42,3 +44,4 @@ Installation
 1. Reboot.
 1. Wait around 1.5 minutes.
 1. Enjoy music.
+1. If not - update timings in startup.bat and startup_user.bat
