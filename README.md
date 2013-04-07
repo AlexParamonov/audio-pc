@@ -33,8 +33,12 @@ Installation
 ------------
 
 1. Unzip or clone this program into C:\audio-pc.
-1. Put a link to startup_user.bat into current user autoload directory (C:\Users\YouUserName\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup).
-1. Schedule startup.bat to be loaded on user login (it should be run with admin rights).
-1. Put a shortcut to your favorive player to player.lnk
+1. Put a link to startup_user.bat into current user autoload directory
+  for Windows 8 it will be here: C:\Users\YouUserName\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup.
+1. Schedule startup.bat to be loaded on user login (it should be run with admin rights):
+  Win+R -> gpedit.msc -> User Configuration -> Windows Settings -> Scripts -> Logon -> Add -> C:\audio-pc\startup.bat -> OK -> OK
+  I'll appreciate if someone could automate this :)
+1. Put a shortcut to your favorive player to C:\audio-pc\player.lnk
 1. Reboot.
+1. Wait around 1.5 minutes.
 1. Enjoy music.
