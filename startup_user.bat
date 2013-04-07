@@ -1,6 +1,9 @@
 @echo off
 set location=C:\audio-pc
 
+echo You have 3 sec to stop me
+timeout /t 3 /nobreak > NUL
+
 echo Start Fidelizer
 
 start "fidelizer" "%location%\fidelizer.exe" /s
