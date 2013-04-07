@@ -33,7 +33,7 @@ Installation
 ------------
 
 1. [Download code](https://github.com/AlexParamonov/audio-pc/archive/master.zip)
-1. Unzip it into C:\audio-pc.
+1. Unzip it into C:\audio-pc. So startup.bat should be located in C:\audio-pc\startup.bat
 1. Open optimize.bat with notepad and edit it:
     1. Change audiocard variable to your audiocard driver process name (find it in taskmanager wich can be triggered by Alt+Ctr+Del -> Start Task Manager)
     1. If you are using JRiver nothing should be changed next
