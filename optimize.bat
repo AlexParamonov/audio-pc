@@ -13,11 +13,11 @@ FOR /f "tokens=2 skip=5" %%G IN ('%pslist%') DO (%process% -a %%G 1 & %process% 
 
 :: Core #2
 :: "Media Center Service" that runs only when the player is running to allow talking to hardware (for remotes, handhelds, etc.) when UAC is enabled.
-FOR /f "tokens=2 skip=3" %%G IN ('%pslist% %player_service%') DO (%process% -a %%G 10 & %process% -p %%G high)
+:: FOR /f "tokens=2 skip=3" %%G IN ('%pslist% %player_service%') DO (%process% -a %%G 10 & %process% -p %%G normal)
 
 :: Core #3
-:: Put player to realtime
-FOR /f "tokens=4 skip=3" %%G IN ('%pslist% %player%') DO (%process% -a %%G 100 & %process% -p %%G realtime)
+:: Put player to normal
+FOR /f "tokens=4 skip=3" %%G IN ('%pslist% %player%') DO (%process% -a %%G 100 & %process% -p %%G normal)
 
 :: Core #4
 :: Put audiocard driver to realtime
