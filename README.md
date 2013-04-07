@@ -32,6 +32,9 @@ or send me a pull request!*
 Installation
 ------------
 
-1. Put startup_user.bat to current user autoload.
-1. Schedule startup.bat to load on user login (it will be run with admin rights).
+1. Unzip or clone this program into C:\audio-pc.
+1. Put a link to startup_user.bat into current user autoload directory (C:\Users\YouUserName\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup).
+1. Schedule startup.bat to be loaded on user login (it should be run with admin rights).
+1. Put a shortcut to your favorive player to player.lnk
+1. Reboot.
 1. Enjoy music.

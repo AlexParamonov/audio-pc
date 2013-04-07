@@ -1,6 +1,7 @@
 @echo off
+set location=C:\audio-pc
 
 timeout /t 80 /nobreak > NUL
 
 echo Optimize
-C:\PSTools\optimize.bat
+%location%\optimize.bat
