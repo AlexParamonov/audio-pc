@@ -26,19 +26,21 @@ Warning
 Current version is tightly coupled with software i am using. You will
 need to edit .bat files for your needs before usage.
 
-And *if you find better way of optimizing PC, create and issue there
-or send me a pull request!*
+And **if you find better way of optimizing PC, create and issue there
+or send me a pull request!**
 
 Installation
 ------------
 
 1. [Download code](https://github.com/AlexParamonov/audio-pc/archive/master.zip)
 1. Unzip it into C:\audio-pc.
-1. Open optimize.bat with notepad and edit it.
+1. Open optimize.bat with notepad and edit it:
+    1. Change audiocard variable to your audiocard driver process name (find it in taskmanager wich can be triggered by Alt+Ctr+Del -> Start Task Manager)
+    1. If you are using JRiver nothing should be changed next
 1. Put a link to startup_user.bat into current user autoload directory
   for Windows 8 it will be here: C:\Users\YouUserName\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup.
 1. Schedule startup.bat to be loaded on user login (it should be run with admin rights):
-  Win+R -> gpedit.msc -> User Configuration -> Windows Settings -> Scripts -> Logon -> Add -> C:\audio-pc\startup.bat -> OK -> OK
+  Win+R -> gpedit.msc -> User Configuration -> Windows Settings -> Scripts -> Logon -> Add -> C:\audio-pc\startup.bat -> OK -> OK  
   I'll appreciate if someone could automate this :)
 1. Put a shortcut to your favorive player to C:\audio-pc\player.lnk
 1. Reboot.
