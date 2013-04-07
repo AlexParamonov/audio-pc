@@ -7,7 +7,8 @@ Foreword
 --------
 
 I am using audiophile windows 8 edition with all not audio and network
-related services disabled.
+related services disabled. Threads and virtualization are also
+disabled in BIOS.
 
 I've build a computer for a JPlay software requirements: Corei7 and
 16G RAM. But that program did't met the expectations. I did't felt any
@@ -25,6 +26,7 @@ Warning
 
 Current version is tightly coupled with software i am using. You will
 need to edit .bat files for your needs before usage.
+I have a 4 Cores, if your system has less - edit optimize.bat
 
 And **if you find better way of optimizing PC, create and issue there
 or send me a pull request!**
