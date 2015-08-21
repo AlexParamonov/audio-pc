@@ -34,14 +34,14 @@ echo noop > /sys/block/mmcblk0/queue/scheduler
 echo 0 > /proc/sys/vm/swappiness
 renice -n -15 -g $(pidof mpd)
 
-echo 6250000 > /proc/sys/kernel/sched_latency_ns
-echo 625000 > /proc/sys/kernel/sched_min_granularity_ns
+echo 625000 > /proc/sys/kernel/sched_latency_ns
+echo 104165 > /proc/sys/kernel/sched_min_granularity_ns
 echo 156250 > /proc/sys/kernel/sched_wakeup_granularity_ns
-
 echo 156248 > /proc/sys/kernel/sched_rt_period_us
 echo 148436 > /proc/sys/kernel/sched_rt_runtime_us
 
 ifconfig eth0 txqueuelen 10000
+ifconfig eth0 mtu 1500
 service udev stop
 service dbus stop
 pkill dhclient
