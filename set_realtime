@@ -5,16 +5,13 @@ pid=$(pgrep "mpd")
 ids=($(ps --no-headers -ww -p $pid -L -olwp | sed 's/$/ /' | tr  -d '\n'))
 
 echo "set priorities"
-# Main thread on 1st core
-# chrt -f -p 10 ${ids[0]}
-chrt -f -p 10 ${ids[1]}
-taskset -pc 2 ${ids[0]}
-
 # Samba on 1st core
-chrt -f -p 49 $(pgrep cifsd)
-
+chrt -r -p 49 $(pgrep cifsd)
 # Ethernet on 1st core
-chrt -f -p 52 $(pgrep irq/150)
+chrt -r -p 52 $(pgrep irq/150)
+
+# MPD priorities are set in mpd.conf
+# Main thread on 1st core
 
 # Decoder and player on 2nd core
 taskset -pc 1 ${ids[2]}
@@ -22,13 +19,15 @@ taskset -pc 1 ${ids[3]}
 
 # Output thread on 3th core
 taskset -pc 2 ${ids[4]}
+# Update thread on 3rd core
+taskset -pc 2 ${ids[0]}
 
 # Output IRQ on 4rd core
 for PID in $(pgrep ci_hdrc) ; do taskset -pc 3 $PID ; done
 echo 8 > /proc/irq/72/smp_affinity
 echo 8 > /proc/irq/75/smp_affinity
-chrt -f -p 97 $(pgrep irq/72)
-chrt -f -p 97 $(pgrep irq/75)
+chrt -f -p 99 $(pgrep irq/72)
+chrt -f -p 99 $(pgrep irq/75)
 
 # Other tunups
 echo noop > /sys/block/mmcblk0/queue/scheduler
