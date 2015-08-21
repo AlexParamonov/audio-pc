@@ -11,16 +11,16 @@ chrt -r -p 49 $(pgrep cifsd)
 chrt -r -p 52 $(pgrep irq/150)
 
 # MPD priorities are set in mpd.conf
-# Main thread on 1st core
+# Update thread on 1st core
 
-# Decoder and player on 2nd core
-taskset -pc 1 ${ids[2]}
-taskset -pc 1 ${ids[3]}
+# Decoder and player on 2nd & 3rd core
+taskset -pc 1,2 ${ids[2]}
+taskset -pc 1,2 ${ids[3]}
 
-# Output thread on 3th core
-taskset -pc 2 ${ids[4]}
-# Update thread on 3rd core
-taskset -pc 2 ${ids[0]}
+# Output thread on 2nd & 3rd core
+taskset -pc 1,2 ${ids[4]}
+# Main thread on 2,3rd core
+taskset -pc 1,2 ${ids[0]}
 
 # Output IRQ on 4rd core
 for PID in $(pgrep ci_hdrc) ; do taskset -pc 3 $PID ; done
