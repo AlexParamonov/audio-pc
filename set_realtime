@@ -1,0 +1,48 @@
+#!/bin/bash
+
+echo "get data"
+pid=$(pgrep "mpd")
+ids=($(ps --no-headers -ww -p $pid -L -olwp | sed 's/$/ /' | tr  -d '\n'))
+
+echo "set priorities"
+# Main thread on 1st core
+# chrt -f -p 10 ${ids[0]}
+chrt -f -p 10 ${ids[1]}
+taskset -pc 2 ${ids[0]}
+
+# Samba on 1st core
+chrt -f -p 49 $(pgrep cifsd)
+
+# Ethernet on 1st core
+chrt -f -p 52 $(pgrep irq/150)
+
+# Decoder and player on 2nd core
+taskset -pc 1 ${ids[2]}
+taskset -pc 1 ${ids[3]}
+
+# Output thread on 3th core
+taskset -pc 2 ${ids[4]}
+
+# Output IRQ on 4rd core
+for PID in $(pgrep ci_hdrc) ; do taskset -pc 3 $PID ; done
+echo 8 > /proc/irq/72/smp_affinity
+echo 8 > /proc/irq/75/smp_affinity
+chrt -f -p 97 $(pgrep irq/72)
+chrt -f -p 97 $(pgrep irq/75)
+
+# Other tunups
+echo noop > /sys/block/mmcblk0/queue/scheduler
+echo 0 > /proc/sys/vm/swappiness
+renice -n -15 -g $(pidof mpd)
+
+echo 6250000 > /proc/sys/kernel/sched_latency_ns
+echo 625000 > /proc/sys/kernel/sched_min_granularity_ns
+echo 156250 > /proc/sys/kernel/sched_wakeup_granularity_ns
+
+echo 156248 > /proc/sys/kernel/sched_rt_period_us
+echo 148436 > /proc/sys/kernel/sched_rt_runtime_us
+
+ifconfig eth0 txqueuelen 10000
+service udev stop
+service dbus stop
+pkill dhclient
