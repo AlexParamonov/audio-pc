@@ -1,0 +1,4 @@
+mkdir /var/log/mpd
+mkdir /var/log/nginx
+mkdir /var/log/samba
+mkdir /var/cache/debconf

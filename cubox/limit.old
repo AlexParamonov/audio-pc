@@ -1,0 +1,3 @@
+@audio - rtprio 85
+@audio - memlock unlimited
+@audio - nice -10

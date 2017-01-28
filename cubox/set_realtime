@@ -1,0 +1,56 @@
+#!/bin/bash
+
+echo "get data"
+pid=$(pgrep "mpd")
+ids=($(ps --no-headers -ww -p $pid -L -olwp | sed 's/$/ /' | tr  -d '\n'))
+
+echo "set priorities"
+
+echo "Core 1:"
+# Main thread 
+taskset -pc 0 ${ids[0]}
+# Samba
+chrt -r -p 49 $(pgrep cifsd)
+# Ethernet
+chrt -r -p 52 $(pgrep irq/150)
+# Update thread
+taskset -pc 0 ${ids[1]}
+
+echo "Core 2:"
+# Decoder
+taskset -pc 1 ${ids[3]}
+
+echo "Core 2 & 3:"
+# Player
+taskset -pc 1,2 ${ids[2]}
+# Output
+taskset -pc 1,2 ${ids[4]}
+
+echo "Core 4:"
+# Output IRQ
+for PID in $(pgrep ci_hdrc) ; do taskset -pc 3 $PID ; done
+echo 8 > /proc/irq/72/smp_affinity
+chrt -f -p 99 $(pgrep irq/72)
+#echo 8 > /proc/irq/75/smp_affinity
+#chrt -f -p 99 $(pgrep irq/75)
+
+echo "set variables"
+echo noop > /sys/block/mmcblk0/queue/scheduler
+echo 0 > /proc/sys/vm/swappiness
+#renice -n -15 -g $(pidof mpd)
+
+echo 625000 > /proc/sys/kernel/sched_latency_ns
+echo 104165 > /proc/sys/kernel/sched_min_granularity_ns
+echo 156250 > /proc/sys/kernel/sched_wakeup_granularity_ns
+# echo 18000000 > /proc/sys/kernel/sched_latency_ns
+# echo 2250000 > /proc/sys/kernel/sched_min_granularity_ns
+# echo 3000000 > /proc/sys/kernel/sched_wakeup_granularity_ns
+
+echo 156248 > /proc/sys/kernel/sched_rt_period_us
+echo 148436 > /proc/sys/kernel/sched_rt_runtime_us
+
+ifconfig eth0 txqueuelen 10000
+ifconfig eth0 mtu 1500
+service udev stop
+service dbus stop
+pkill dhclient
