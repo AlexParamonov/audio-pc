@@ -7,8 +7,6 @@ ids=($(ps --no-headers -ww -p $pid -L -olwp | sed 's/$/ /' | tr  -d '\n'))
 echo "set priorities"
 
 echo "Core 1:"
-# Main thread 
-taskset -pc 0 ${ids[0]}
 # Samba
 chrt -r -p 49 $(pgrep cifsd)
 # Ethernet
@@ -21,10 +19,14 @@ echo "Core 2:"
 taskset -pc 1 ${ids[3]}
 
 echo "Core 2 & 3:"
+# Main thread
+taskset -pc 1,2 ${ids[0]}
 # Player
 taskset -pc 1,2 ${ids[2]}
+
+echo "Core 3:"
 # Output
-taskset -pc 1,2 ${ids[4]}
+taskset -pc 2 ${ids[4]}
 
 echo "Core 4:"
 # Output IRQ
