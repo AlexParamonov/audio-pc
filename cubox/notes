@@ -1,0 +1,2 @@
+# /etc/modprobe.d/cifs.conf 
+options cifs CIFSMaxBufSize=130048
